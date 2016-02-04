@@ -138,8 +138,27 @@ module RouteTranslator
       else
         opts[:default] = str
       end
-      res = I18n.translate(str, opts)
+      if RouteTranslator.extra_translations?
+        res = translate_from_hash(str, locale, opts)
+      else
+        res = I18n.translate(str, opts)
+      end
+
       URI.escape(res)
+    end
+
+    def self.translate_from_hash(string, locale, opts)
+      locale = locale.to_sym
+      slug = RouteTranslator.extra_translations[string.to_sym][locale]
+      unless slug && opts[:fallback]
+        fallbacks = I18n.fallbacks[locale]
+        fallback.each do |fallback_locale|
+          next if fallback_locale == locale
+          result = translate_from_hash(string, fallback_locale, opts)
+          return result if result
+        end
+      end
+      slug
     end
 
     def self.locale_param_present?(path)

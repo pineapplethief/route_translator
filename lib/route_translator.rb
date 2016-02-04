@@ -1,6 +1,4 @@
 require 'active_support'
-
-require File.expand_path('../route_translator/extensions', __FILE__)
 require File.expand_path('../route_translator/translator', __FILE__)
 require File.expand_path('../route_translator/host', __FILE__)
 
@@ -41,4 +39,19 @@ module RouteTranslator
   def self.locale_param_key
     config.locale_param_key
   end
+
+  def self.extra_translations?
+    @extra_translations.present?
+  end
+
+  def self.extra_translations
+    @extra_translations
+  end
+
+  def self.extra_translations=(value)
+    @extra_translations = value
+  end
+
 end
+
+require File.expand_path('../route_translator/extensions', __FILE__)

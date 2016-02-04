@@ -10,6 +10,12 @@ module ActionDispatch
         @localized = false
       end
 
+      def with_extra_translations(hash)
+        RouteTranslator.extra_translations = hash
+        yield
+        RouteTranslator.extra_translations = {}
+      end
+
       def add_route(action, options) # :nodoc:
         path = path_for_action(action, options.delete(:path))
 
