@@ -56,7 +56,7 @@ module RouteTranslator
         if new_conditions[:required_defaults] && !new_conditions[:required_defaults].include?(RouteTranslator.locale_param_key)
           new_conditions[:required_defaults] << RouteTranslator.locale_param_key
         end
-        new_defaults = defaults.merge(RouteTranslator.locale_param_key => locale.to_s.gsub('native_', ''))
+        new_defaults = defaults.merge(RouteTranslator.locale_param_key => locale.to_s.upcase.gsub('native_', ''))
         new_requirements = requirements.merge(RouteTranslator.locale_param_key => locale.to_s.upcase)
         new_route_name = translate_name(route_name, locale)
         new_route_name = nil if new_route_name && route_set.named_routes.routes[new_route_name.to_sym] # TODO: Investigate this :(
