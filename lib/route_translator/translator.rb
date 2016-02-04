@@ -151,7 +151,7 @@ module RouteTranslator
     def self.translate_from_hash(string, locale, opts)
       locale = locale.to_sym
       slugs = RouteTranslator.extra_translations[string.to_sym]
-      slug = slug[locale] if slugs.present?
+      slug = slugs[locale] if slugs.present?
       unless slug && opts[:fallback]
         fallbacks = I18n.fallbacks[locale]
         fallbacks.each do |fallback_locale|
