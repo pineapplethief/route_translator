@@ -140,6 +140,7 @@ module RouteTranslator
       end
       if RouteTranslator.extra_translations?
         res = translate_from_hash(str, locale, opts)
+        res = I18n.translate(str, opts) if res.blank?
       else
         res = I18n.translate(str, opts)
       end
@@ -149,7 +150,8 @@ module RouteTranslator
 
     def self.translate_from_hash(string, locale, opts)
       locale = locale.to_sym
-      slug = RouteTranslator.extra_translations[string.to_sym][locale]
+      slugs = RouteTranslator.extra_translations[string.to_sym]
+      slug = slug[locale] if slugs
       unless slug && opts[:fallback]
         fallbacks = I18n.fallbacks[locale]
         fallback.each do |fallback_locale|
