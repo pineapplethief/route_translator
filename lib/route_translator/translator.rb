@@ -154,7 +154,7 @@ module RouteTranslator
       slug = slug[locale] if slugs
       unless slug && opts[:fallback]
         fallbacks = I18n.fallbacks[locale]
-        fallback.each do |fallback_locale|
+        fallbacks.each do |fallback_locale|
           next if fallback_locale == locale
           result = translate_from_hash(string, fallback_locale, opts)
           return result if result
