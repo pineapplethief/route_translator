@@ -162,6 +162,7 @@ module RouteTranslator
           return result if result
         end
       end
+      nil
     end
 
     def self.locale_param_present?(path)
