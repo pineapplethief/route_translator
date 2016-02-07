@@ -4,15 +4,11 @@ require 'action_dispatch'
 module ActionDispatch
   module Routing
     class Mapper
-      def localized
+      def localized(extra_translations: nil)
         @localized = true
+        RouteTranslator.extra_translations = extra_translations if extra_translations.is_a?(Hash)
         yield
         @localized = false
-      end
-
-      def with_extra_translations(hash)
-        RouteTranslator.extra_translations = hash
-        yield
         RouteTranslator.extra_translations = {}
       end
 
